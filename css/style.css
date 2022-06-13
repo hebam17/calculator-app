@@ -211,7 +211,7 @@ h2 {
 }
 
 /* the toggle button */
-#toggle-outer-thyme1 h2,
+#thyme-header-thyme1,
 #toggle-nums-thyme1 div {
   color: var(--thyme1-text-light);
 }
@@ -293,13 +293,13 @@ h2 {
 }
 
 /* the toggle button */
-#toggle-outer-thyme2 h2,
+#thyme-header-thyme2,
 #toggle-nums-thyme2 div {
   color: var(--thyme2-text-dark);
 }
 
 #toggle-btn-thyme2 {
-  background: var(--thyme2-screen-background);
+  background: var(--thyme2-keypad-background);
 }
 
 #toggle2-thyme2 {
@@ -375,7 +375,7 @@ h2 {
 }
 
 /* the toggle button */
-#toggle-outer-thyme3 h2,
+#thyme-header-thyme3,
 #toggle-nums-thyme3 div {
   color: var(--thyme3-text-yellow);
 }
