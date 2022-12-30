@@ -105,31 +105,63 @@ const getNumber = (e) => {
     }
     screen.innerText = text;
   }
+
+  console.log("text:", text);
+  console.log("result:", result);
+  console.log("operand:", operand);
+  console.log("number2:", number2);
 };
 
 const getOperand = (e) => {
-  if (text !== "" || text !== "0") {
+  // if (text !== "" || text !== "0") {
+  //   if (result === 0) {
+  //     result = parseInt(text);
+  //     operand = e.target.innerText;
+  //     text = "0";
+  //   } else if (
+  //     (text !== "0" || text !== "") &&
+  //     result !== 0 &&
+  //     operand === ""
+  //   ) {
+  //     text = "";
+  //     operand = e.target.innerText;
+  //   } else {
+  //     number2 = parseInt(text);
+  //     calcOperations(operand, result, number2);
+  //     operand = e.target.innerText;
+  //     text = result;
+  //     number2 = 0;
+  //     screen.innerText = text;
+  //     text = "0";
+  //   }
+  // }
+
+  if (text !== 0 || text !== "") {
     if (result === 0) {
-      result = parseInt(text);
+      result = parseFloat(text);
       operand = e.target.innerText;
       text = "0";
-    } else if (
-      (text !== "0" || text !== "") &&
-      result !== 0 &&
-      operand === ""
-    ) {
-      text = "";
+    } else if (result !== 0 && number2 === 0) {
+      number2 = parseFloat(text);
       operand = e.target.innerText;
-    } else {
-      number2 = parseInt(text);
-      calcOperations(operand, result, number2);
+      text = "0";
+    } else if (result !== 0 && number2 !== 0) {
       operand = e.target.innerText;
-      text = result;
+      sum(operand);
+      operand = "";
       number2 = 0;
-      screen.innerText = text;
-      text = "0";
+    } else {
+      operand = e.target.innerText;
+      if (number2 === 0) {
+        number2 = 0;
+      }
     }
   }
+
+  console.log("text:", text);
+  console.log("result:", result);
+  console.log("operand:", operand);
+  console.log("number2:", number2);
 };
 
 const sum = () => {
@@ -137,15 +169,25 @@ const sum = () => {
     calcOperations(operand, result, number2);
     text = result;
     screen.innerText = text;
+    number2 = 0;
+    operand = "";
+    result = 0;
   } else if (result !== 0 && number2 === 0 && operand !== "" && text !== "") {
     number2 = parseFloat(text);
     calcOperations(operand, result, number2);
     text = result;
     screen.innerText = text;
+    result = 0;
+    number2 = 0;
+    operand = "";
   } else {
     result = text;
     screen.innerText = text;
   }
+  console.log("text:", text);
+  console.log("result:", result);
+  console.log("operand:", operand);
+  console.log("number2:", number2);
 };
 
 const delHandler = () => {
@@ -159,6 +201,10 @@ const delHandler = () => {
     text = textList.join("");
     screen.innerText = text;
   }
+  console.log("text:", text);
+  console.log("result:", result);
+  console.log("operand:", operand);
+  console.log("number2:", number2);
 };
 
 const resetHandler = () => {
@@ -187,3 +233,8 @@ resultElement.addEventListener("click", sum);
 delBtn.addEventListener("click", delHandler);
 resetBtn.addEventListener("click", resetHandler);
 // ////////////////////
+
+console.log("text:", text);
+console.log("result:", result);
+console.log("operand:", operand);
+console.log("number2:", number2);
