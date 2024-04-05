@@ -848,4 +848,18 @@ h2 {
   /* END OF CALC BODY */
 }
 
+/* a general hover effect */
+.key:hover,
+.del-key:hover,
+.result:hover,
+.reset:hover {
+  cursor: pointer;
+}
+
+/* a key down mimic  */
+.move {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+}
 /* END MEDIAQUERY */

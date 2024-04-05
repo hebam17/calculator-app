@@ -86,110 +86,73 @@ const calcOperations = (operand, a, b) => {
 };
 
 let text = "";
-let result = 0;
 let operand = "";
+let number1 = 0;
 let number2 = 0;
+let result = 0;
 
+// to get the number and sync it with the screen
 const getNumber = (e) => {
   if (!e.target.classList.contains("operand")) {
     if (text === "0") {
       text = "";
       text += e.target.innerText;
-    } else {
-      text += e.target.innerText;
-    }
-    if ((text !== "0" || text !== "") && result !== 0 && operand === "") {
-      result = 0;
+    } else if (parseFloat(text) == result) {
       text = "";
       text += e.target.innerText;
-    }
-    screen.innerText = text;
-  }
-
-  console.log("text:", text);
-  console.log("result:", result);
-  console.log("operand:", operand);
-  console.log("number2:", number2);
-};
-
-const getOperand = (e) => {
-  // if (text !== "" || text !== "0") {
-  //   if (result === 0) {
-  //     result = parseInt(text);
-  //     operand = e.target.innerText;
-  //     text = "0";
-  //   } else if (
-  //     (text !== "0" || text !== "") &&
-  //     result !== 0 &&
-  //     operand === ""
-  //   ) {
-  //     text = "";
-  //     operand = e.target.innerText;
-  //   } else {
-  //     number2 = parseInt(text);
-  //     calcOperations(operand, result, number2);
-  //     operand = e.target.innerText;
-  //     text = result;
-  //     number2 = 0;
-  //     screen.innerText = text;
-  //     text = "0";
-  //   }
-  // }
-
-  if (text !== 0 || text !== "") {
-    if (result === 0) {
-      result = parseFloat(text);
-      operand = e.target.innerText;
-      text = "0";
-    } else if (result !== 0 && number2 === 0) {
-      number2 = parseFloat(text);
-      operand = e.target.innerText;
-      text = "0";
-    } else if (result !== 0 && number2 !== 0) {
-      operand = e.target.innerText;
-      sum(operand);
-      operand = "";
-      number2 = 0;
+      result = 0;
     } else {
+      text += e.target.innerText;
+    }
+
+    screen.innerText = text;
+  }
+};
+
+// to get the operand and get result
+const getOperand = (e) => {
+  if (text !== "0" || text !== "") {
+    if (result === 0 && number1 === 0 && operand === "") {
+      number1 = parseFloat(text);
+      text = "0";
       operand = e.target.innerText;
-      if (number2 === 0) {
-        number2 = 0;
-      }
+    } else if (
+      (result === 0 && number1 !== 0) ||
+      (result === 0 && number1 === 0 && operand !== "")
+    ) {
+      number2 = parseFloat(text);
+      calcOperations(operand, number1, number2);
+      text = result;
+      screen.innerText = text;
+
+      operand = e.target.innerText;
+    } else if (result !== 0) {
+      number1 = result;
+      operand = e.target.innerText;
+      result = 0;
+      text = "0";
+    }
+  } else if (text === "0" || text === "") {
+    if (number1 === 0) {
+      operand = e.target.innerText;
     }
   }
-
-  console.log("text:", text);
-  console.log("result:", result);
-  console.log("operand:", operand);
-  console.log("number2:", number2);
 };
 
+// to get the result when clicking =
 const sum = () => {
-  if (result !== 0 && number2 !== 0 && operand !== "") {
-    calcOperations(operand, result, number2);
-    text = result;
-    screen.innerText = text;
-    number2 = 0;
-    operand = "";
-    result = 0;
-  } else if (result !== 0 && number2 === 0 && operand !== "" && text !== "") {
+  if (result === 0 && operand !== "") {
     number2 = parseFloat(text);
-    calcOperations(operand, result, number2);
+    calcOperations(operand, number1, number2);
     text = result;
     screen.innerText = text;
-    result = 0;
+    number1 = 0;
     number2 = 0;
     operand = "";
-  } else {
-    result = text;
-    screen.innerText = text;
   }
-  console.log("text:", text);
-  console.log("result:", result);
-  console.log("operand:", operand);
-  console.log("number2:", number2);
 };
 
+// handle clicking the del button
 const delHandler = () => {
   if (text.length === 1) {
     text = "0";
@@ -201,12 +164,9 @@ const delHandler = () => {
     text = textList.join("");
     screen.innerText = text;
   }
-  console.log("text:", text);
-  console.log("result:", result);
-  console.log("operand:", operand);
-  console.log("number2:", number2);
 };
 
+// handle clicking the reset button
 const resetHandler = () => {
   text = "0";
   result = 0;
@@ -215,26 +175,60 @@ const resetHandler = () => {
   screen.innerText = text;
 };
 
+// want the boxshadow to disappear on keydown
 // ADD EVENT LISTENERS
 numKeysElements.forEach((elem) => {
-  elem.addEventListener("click", (e) => {
-    getNumber(e);
+  elem.addEventListener("click", getNumber);
+});
+
+// to mimic a moving key ////////////////
+numKeysElements.forEach((elem) => {
+  elem.addEventListener("mousedown", (e) => {
+    e.target.classList.add("move");
   });
 });
 
-operandKeysElements.forEach((elem) => {
-  elem.addEventListener("click", (e) => {
-    getOperand(e);
+delBtn.addEventListener("mousedown", (e) => {
+  e.target.classList.add("move");
+});
+
+resetBtn.addEventListener("mousedown", (e) => {
+  e.target.classList.add("move");
+});
+
+resultElement.addEventListener("mousedown", (e) => {
+  e.target.classList.add("move");
+});
+
+numKeysElements.forEach((elem) => {
+  elem.addEventListener("mouseup", (e) => {
+    e.target.classList.remove("move");
   });
+});
+
+delBtn.addEventListener("mouseup", (e) => {
+  e.target.classList.remove("move");
+});
+
+resultElement.addEventListener("mouseup", (e) => {
+  e.target.classList.remove("move");
+});
+
+resetBtn.addEventListener("mouseup", (e) => {
+  e.target.classList.remove("move");
+});
+
+// ////////////////
+
+operandKeysElements.forEach((elem) => {
+  elem.addEventListener("click", getOperand);
 });
 
 resultElement.addEventListener("click", sum);
 
 delBtn.addEventListener("click", delHandler);
+
 resetBtn.addEventListener("click", resetHandler);
 // ////////////////////
 
-console.log("text:", text);
-console.log("result:", result);
-console.log("operand:", operand);
-console.log("number2:", number2);
+// see the nan result after hitten / or * and =
