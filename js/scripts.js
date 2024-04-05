@@ -13,6 +13,7 @@ const resultElement = document.getElementsByClassName("result")[0];
 
 const delBtn = document.getElementsByClassName("del-key")[0];
 const resetBtn = document.getElementsByClassName("reset")[0];
+
 // funcs
 const toggleBtnElements = [...toggleBtn.children];
 const containerElements = [...container.children];
@@ -154,12 +155,11 @@ const sum = () => {
 
 // handle clicking the del button
 const delHandler = () => {
-  if (text.length === 1) {
+  if (text.length === 1 || text === Infinity) {
     text = "0";
     screen.innerText = text;
   } else if (text !== "") {
     let textList = text.split("");
-    console.log(textList);
     textList.pop();
     text = textList.join("");
     screen.innerText = text;
@@ -169,9 +169,10 @@ const delHandler = () => {
 // handle clicking the reset button
 const resetHandler = () => {
   text = "0";
-  result = 0;
+  number1 = 0;
   number2 = 0;
   operand = "";
+  result = 0;
   screen.innerText = text;
 };
 
@@ -230,5 +231,3 @@ delBtn.addEventListener("click", delHandler);
 
 resetBtn.addEventListener("click", resetHandler);
 // ////////////////////
-
-// see the nan result after hitten / or * and =
